@@ -30,3 +30,5 @@ const budgetCategories = [
         budget: 300
     }
 ]
+
+module.exports = budgetCategories;
