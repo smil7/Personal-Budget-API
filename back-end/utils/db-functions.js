@@ -1,10 +1,10 @@
-const {budgetCategories} = require('./db');
+const budgetCategories = require('./db');
 
-let categoryIdCounter = budgetCategories.length;
+let categoryIdCounter = budgetCategories.length+1;
 
 const contains = (newCategory) => {
     for (const [key, value] of Object.entries(budgetCategories)){
-        if(key === newCategory){
+        if(value.category === newCategory){
             return true;
         }
     }
@@ -12,6 +12,7 @@ const contains = (newCategory) => {
 }
 
 const addToDatabase = (instance) => {
+    console.log(instance.category);
     const found = contains(instance.category);
     if(found){
         return null;
@@ -22,3 +23,9 @@ const addToDatabase = (instance) => {
         return budgetCategories[budgetCategories.length - 1];
     }
 }
+
+const getAllData = () => {
+    return budgetCategories;
+}
+
+module.exports = {addToDatabase, getAllData};
