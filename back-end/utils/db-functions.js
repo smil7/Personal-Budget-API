@@ -5,16 +5,24 @@ let categoryIdCounter = budgetCategories.length+1;
 const contains = (newCategory) => {
     for (const [key, value] of Object.entries(budgetCategories)){
         if(value.category === newCategory){
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
+}
+
+const getCategory = (categoryName) => {
+    for (const [key, value] of Object.entries(budgetCategories)){
+        if(value.category === categoryName){
+            return value;
+        }
+    }
+    return null;
 }
 
 const addToDatabase = (instance) => {
-    console.log(instance.category);
     const found = contains(instance.category);
-    if(found){
+    if(!found){
         return null;
     }
     else{
@@ -28,4 +36,9 @@ const getAllData = () => {
     return budgetCategories;
 }
 
-module.exports = {addToDatabase, getAllData};
+const getCategoryByName = (instance) => {
+    const category = getCategory(instance);
+    return category;
+}
+
+module.exports = {addToDatabase, getAllData, getCategoryByName};
