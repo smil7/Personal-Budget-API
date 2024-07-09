@@ -51,17 +51,17 @@ const updateCategoryDetails = (instance) => {
 }
 
 // Updates the value of the budget by the POST request
-const subtractBudgetValue = (instance) => {
-    const categoryIndex = getCategory(instance.id);
-
-    if(instance.category === budgetCategories[categoryIndex].category){
-        if(!(instance.budget > budgetCategories[categoryIndex].budget)){
-            budgetCategories[categoryIndex].budget = Math.abs(instance.budget - budgetCategories[categoryIndex].budget);
-            return budgetCategories[categoryIndex];
-        }
-        return 'The amount sent exceeds the envelope\'s budget!';
+const subtractBudgetValue = (instance, amount) => {
+    if(!(amount > instance.budget)){
+        instance.budget = Math.abs(amount - instance.budget);
+        return instance.budget;
     }
-    return 'The envelope\'s category name is not the same!';
+    return 'The amount sent exceeds the envelope\'s budget!';
+}
+
+const addBudgetValue = (instance, amount) => {
+    instance.budget = Math.abs(amount + instance.budget);
+    return instance.budget;
 }
 
 const deleteCategoryById = (instance) => {
@@ -70,4 +70,4 @@ const deleteCategoryById = (instance) => {
     return budgetCategories.splice(categoryIndex, 1);
 }
 
-module.exports = {addToDatabase, getAllData, getCategoryById, updateCategoryDetails, subtractBudgetValue, deleteCategoryById};
+module.exports = {addToDatabase, getAllData, getCategoryById, updateCategoryDetails, subtractBudgetValue, addBudgetValue, deleteCategoryById};
