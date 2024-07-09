@@ -1,6 +1,6 @@
 const budgetCategories = require('./db');
 
-let categoryIdCounter = budgetCategories.length+1;
+let categoryIdCounter = budgetCategories.length;
 
 const contains = (newCategory) => {
     for (const [key, value] of Object.entries(budgetCategories)){
@@ -21,7 +21,7 @@ const addToDatabase = (instance) => {
         return null;
     }
     else{
-        instance.id = categoryIdCounter++;
+        instance.id = ++categoryIdCounter;
         budgetCategories.push(instance);
         return budgetCategories[budgetCategories.length - 1];
     }
@@ -64,4 +64,10 @@ const subtractBudgetValue = (instance) => {
     return 'The envelope\'s category name is not the same!';
 }
 
-module.exports = {addToDatabase, getAllData, getCategoryById, updateCategoryDetails, subtractBudgetValue};
+const deleteCategoryById = (instance) => {
+    const categoryIndex = getCategory(instance.id);
+    categoryIdCounter--;
+    return budgetCategories.splice(categoryIndex, 1);
+}
+
+module.exports = {addToDatabase, getAllData, getCategoryById, updateCategoryDetails, subtractBudgetValue, deleteCategoryById};

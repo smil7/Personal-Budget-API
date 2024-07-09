@@ -1,6 +1,6 @@
 const express = require('express');
 const envelopeRouter = express.Router();
-const {addToDatabase, getAllData, getCategoryById, updateCategoryDetails, subtractBudgetValue} = require('../utils/db-functions');
+const {addToDatabase, getAllData, getCategoryById, updateCategoryDetails, subtractBudgetValue, deleteCategoryById} = require('../utils/db-functions');
 
 envelopeRouter.param('categoryId', (req, res, next, id) => {
     const categoryId = Number(id);
@@ -42,7 +42,12 @@ envelopeRouter.put('/:categoryId', (req, res, next) => {
     if(updatedCategory === null){
         return res.status(400).send('Nothing updated, because same details!');
     }
-    return res.status(200).send(updatedCategory);
+    res.status(200).send(updatedCategory);
+});
+
+envelopeRouter.delete('/:categoryId', (req, res, next) => {
+    let deletedCategory = deleteCategoryById(req.category);
+    res.status(204).send(deletedCategory);
 });
 
 module.exports = envelopeRouter;
